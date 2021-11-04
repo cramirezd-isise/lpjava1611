@@ -5,6 +5,8 @@
  */
 package com.edu.sise.capas.gui;
 
+        
+
 /**
  *
  * @author Carlos
@@ -70,6 +72,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar2.add(mitemUsuarios);
 
         jMenuItem1.setText("Provincias");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenuBar2.add(jMenuItem1);
 
         jMenuItem3.setText("Carreras");
@@ -111,6 +118,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         this.add(ifrmInterno);
         ifrmInterno.show();
     }//GEN-LAST:event_mitemUsuariosActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        iFrmProvincias ifrmInterno = new iFrmProvincias();
+        this.add(ifrmInterno);
+        ifrmInterno.setLocation(200,150);
+        ifrmInterno.show();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

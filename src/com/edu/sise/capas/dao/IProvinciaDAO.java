@@ -6,11 +6,12 @@
 package com.edu.sise.capas.dao;
 
 import com.edu.sise.capas.entity.Provincia;
+import java.util.List;
 
 /**
  *
  * @author Carlos
  */
 public interface IProvinciaDAO extends GenericDAO<Provincia, Integer>{
-    
+    List<String> obtenerNombresColumnas() throws DAOException;
 }

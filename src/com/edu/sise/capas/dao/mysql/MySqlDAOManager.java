@@ -45,7 +45,9 @@ public class MySqlDAOManager implements IDAOManager{
 
     @Override
     public IProvinciaDAO getProvinciaDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(provinciaDao==null)
+            provinciaDao = new MySqlProvinciaDAO(cn);
+        return provinciaDao;
     }
 
     @Override
