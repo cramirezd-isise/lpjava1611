@@ -9,7 +9,6 @@ package com.edu.sise.capas.entity;
  *
  * @author Carlos
  */
-public class Carrera {
-    private Integer id_carrera;
-    private String nombre;
+public class Departamento {
+    
 }
