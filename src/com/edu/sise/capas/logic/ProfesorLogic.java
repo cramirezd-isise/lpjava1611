@@ -5,12 +5,10 @@
  */
 package com.edu.sise.capas.logic;
 
-import com.edu.sise.capas.dao.IProvinciaDAO;
+import com.edu.sise.capas.dao.IProfesorDAO;
 import com.edu.sise.capas.dao.mysql.MySqlDAOManager;
-import com.edu.sise.capas.entity.Provincia;
+import com.edu.sise.capas.entity.Profesor;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,13 +16,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Carlos
  */
-public class ProvinciaLogic {
+public class ProfesorLogic {
     MySqlDAOManager factory = MySqlDAOManager.getInstancia(); //Singleton
-    IProvinciaDAO dao = factory.getProvinciaDAO();
+    IProfesorDAO dao = factory.getProfesorDAO();
     DefaultTableModel modelo =  null;
-    DefaultComboBoxModel modeloCB = null;
     
-    private DefaultTableModel getModelo(DefaultTableModel modelo, List<Provincia> lista)throws Exception{
+    private DefaultTableModel getModelo(DefaultTableModel modelo, List<Profesor> lista)throws Exception{
         modelo = new DefaultTableModel();
         List<String> listaNomColumn = dao.obtenerNombresColumnas();
         
@@ -32,11 +29,17 @@ public class ProvinciaLogic {
             modelo.addColumn(columna.toUpperCase().replace('_', ' '));
         }
         //llenar el modelo con la lista
-        for(Provincia obj : lista){
+        for(Profesor obj : lista){
             Object data[] = {
-              obj.getId_prov(),
+              obj.getId_profe(),
+              obj.getDni(),
               obj.getNombre(),
-              obj.getId_depa()
+              obj.getPapellido(),
+              obj.getSapellido(),
+              obj.getFnacimiento(),
+              obj.getTelefono(),
+              obj.getId_prov(),
+              obj.getId_carrera()
             };
             modelo.addRow(data);
         }
@@ -51,15 +54,15 @@ public class ProvinciaLogic {
         jtable.setModel(obtenerTodos());
     }
     
-    public void insertar(Provincia o) throws Exception {
+    public void insertar(Profesor o) throws Exception {
         dao.insertar(o);
     }
     
-    public void modificar(Provincia o) throws Exception {
+    public void modificar(Profesor o) throws Exception {
         dao.modificar(o);
     }
     
-    public void eliminar(Provincia o) throws Exception {
+    public void eliminar(Profesor o) throws Exception {
         dao.eliminar(o);
     }
     
@@ -69,32 +72,5 @@ public class ProvinciaLogic {
     
     public void imprimirTB(JTable jtable, DefaultTableModel modelo) throws Exception{
         jtable.setModel(modelo);
-    }        
-    
-    public void imprimirCB(JComboBox jComboBox)throws Exception{
-        jComboBox.setModel(getModeloCB(dao.obtenerTodos()));
     }
-    
-    private DefaultComboBoxModel getModeloCB(List<Provincia> lista) {
-        modeloCB  = new DefaultComboBoxModel();
-        for(Provincia o: lista){
-            modeloCB.addElement(o);
-        }
-        
-        return modeloCB;
-    }
-    
-    public void buscarCB(JComboBox jComboBox, int id_prov){
-            DefaultComboBoxModel modeloCarrerasCB = (DefaultComboBoxModel)jComboBox.getModel();
-            Provincia obj =  null;
-            for(int i=0;i<modeloCarrerasCB.getSize();i++){
-                obj = (Provincia)modeloCarrerasCB.getElementAt(i);
-                
-                if(obj.getId_prov()==id_prov){
-                    modeloCarrerasCB.setSelectedItem(modeloCarrerasCB.getElementAt(i));
-                    break;
-                }
-            }
-    }
-
 }

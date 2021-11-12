@@ -6,8 +6,8 @@
 package com.edu.sise.capas.dao.mysql;
 
 import com.edu.sise.capas.dao.DAOException;
-import com.edu.sise.capas.dao.IProvinciaDAO;
-import com.edu.sise.capas.entity.Provincia;
+import com.edu.sise.capas.dao.IDepartamentoDAO;
+import com.edu.sise.capas.entity.Departamento;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,23 +22,23 @@ import java.util.List;
  *
  * @author Carlos
  */
-public class MySqlProvinciaDAO implements IProvinciaDAO{
+public class MySqlDepartamentoDAO implements IDepartamentoDAO{
     
-    final String GETALL = "{call pa_listar_provincias()}";
-    final String COLUMNAS = "SELECT * FROM Provincias LIMIT 0";
-    final String INSERT = "{call pa_insertar_provincias(?,?)}";
-    final String UPDATE = "{call pa_modificar_provincias(?, ?, ?)}";
-    final String DELETE = "{call pa_eliminar_provincias(?)}";
-    final String BUSQUEDA = "{call pa_buscar_provincias(?)}";
+    final String GETALL = "{call pa_listar_departamentos()}";
+    final String COLUMNAS = "SELECT * FROM Departamentos LIMIT 0";
+    final String INSERT = "{call pa_insertar_departamentos(?)}";
+    final String UPDATE = "{call pa_modificar_departamentos(?, ?)}";
+    final String DELETE = "{call pa_eliminar_departamentos(?)}";
+    final String BUSQUEDA = "{call pa_buscar_departamentos(?)}";
 
     private Connection cn;
 
-    public MySqlProvinciaDAO(Connection cn) {
+    public MySqlDepartamentoDAO(Connection cn) {
         this.cn = cn;
     }
 
     @Override
-    public void insertar(Provincia o) throws DAOException {
+    public void insertar(Departamento o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
@@ -46,7 +46,6 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
             cs = cn.prepareCall(INSERT);
             int i = 1;
             cs.setString(i++,o.getNombre());
-            cs.setInt(i++,o.getId_depa());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar el registro!!!");
                
@@ -63,7 +62,7 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public void modificar(Provincia o) throws DAOException {
+    public void modificar(Departamento o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
@@ -72,7 +71,6 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
             int i = 1;
             cs.setString(i++,o.getNombre());
             cs.setInt(i++,o.getId_depa());
-            cs.setInt(i++,o.getId_prov());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la modificación del registro!!!");
                
@@ -89,14 +87,14 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public void eliminar(Provincia o) throws DAOException {
+    public void eliminar(Departamento o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
         try{
             cs = cn.prepareCall(DELETE);
             int i = 1;
-            cs.setInt(i++,o.getId_prov());
+            cs.setInt(i++,o.getId_depa());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la eliminación del registro!!!");
                
@@ -113,10 +111,10 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public List<Provincia> obtenerTodos() throws DAOException {
+    public List<Departamento> obtenerTodos() throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        List<Provincia> lista = new ArrayList<>();
+        List<Departamento> lista = new ArrayList<>();
         try {
             cs = cn.prepareCall(GETALL);
             rs = cs.executeQuery();
@@ -137,15 +135,14 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public Provincia obtenerxID(Integer id) throws DAOException {
+    public Departamento obtenerxID(Integer id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private Provincia getRS(ResultSet rs) throws SQLException{
-        return new Provincia(
-                rs.getInt("id_prov"),
-                rs.getString("nombre"),
-                rs.getInt("id_depa")
+    private Departamento getRS(ResultSet rs) throws SQLException{
+        return new Departamento(
+                rs.getInt("id_depa"),
+                rs.getString("nombre")                
             );
     }
 
@@ -177,10 +174,10 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public List<Provincia> obtenerBusqueda(String valor) throws DAOException {
+    public List<Departamento> obtenerBusqueda(String valor) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        List<Provincia> lista = new ArrayList<>();
+        List<Departamento> lista = new ArrayList<>();
         try {
             cs = cn.prepareCall(BUSQUEDA);
             int i=1;

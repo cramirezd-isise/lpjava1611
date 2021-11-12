@@ -5,14 +5,14 @@
  */
 package com.edu.sise.capas.dao;
 
-import com.edu.sise.capas.entity.Provincia;
+import com.edu.sise.capas.entity.Departamento;
 import java.util.List;
 
 /**
  *
  * @author Carlos
  */
-public interface IProvinciaDAO extends GenericDAO<Provincia, Integer>{
+public interface IDepartamentoDAO extends GenericDAO<Departamento, Integer>{
     List<String> obtenerNombresColumnas() throws DAOException;
-    List<Provincia> obtenerBusqueda(String valor) throws DAOException;
+    List<Departamento> obtenerBusqueda(String valor) throws DAOException;
 }

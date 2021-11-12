@@ -8,7 +8,9 @@ package com.edu.sise.capas.dao.mysql;
 import com.edu.sise.capas.dao.Conexion;
 import com.edu.sise.capas.dao.ICarreraDAO;
 import com.edu.sise.capas.dao.IDAOManager;
+import com.edu.sise.capas.dao.IDepartamentoDAO;
 import com.edu.sise.capas.dao.IEmpleadoDAO;
+import com.edu.sise.capas.dao.IProfesorDAO;
 import com.edu.sise.capas.dao.IProvinciaDAO;
 import java.sql.Connection;
 
@@ -34,6 +36,8 @@ public class MySqlDAOManager implements IDAOManager{
     private IEmpleadoDAO empleadoDao = null;
     private IProvinciaDAO provinciaDao = null;
     private ICarreraDAO carreraDao = null;
+    private IDepartamentoDAO departamentoDao = null;
+    private IProfesorDAO profesorDao = null;
     
     @Override
     public IEmpleadoDAO getEmpleadoDAO() {
@@ -52,7 +56,23 @@ public class MySqlDAOManager implements IDAOManager{
 
     @Override
     public ICarreraDAO getCarreraDAO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(carreraDao==null)
+            carreraDao = new MySqlCarreraDAO(cn);
+        return carreraDao;
+    }
+
+    @Override
+    public IDepartamentoDAO getDepartamentoDAO() {
+        if(departamentoDao==null)
+            departamentoDao = new MySqlDepartamentoDAO(cn);
+        return departamentoDao;
+    }
+
+    @Override
+    public IProfesorDAO getProfesorDAO() {
+        if(profesorDao==null)
+            profesorDao = new MySqlProfesorDAO(cn);
+        return profesorDao;
     }
     
 }

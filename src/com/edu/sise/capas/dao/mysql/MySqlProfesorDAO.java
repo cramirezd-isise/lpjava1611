@@ -6,8 +6,8 @@
 package com.edu.sise.capas.dao.mysql;
 
 import com.edu.sise.capas.dao.DAOException;
-import com.edu.sise.capas.dao.IProvinciaDAO;
-import com.edu.sise.capas.entity.Provincia;
+import com.edu.sise.capas.dao.IProfesorDAO;
+import com.edu.sise.capas.entity.Profesor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,31 +22,37 @@ import java.util.List;
  *
  * @author Carlos
  */
-public class MySqlProvinciaDAO implements IProvinciaDAO{
+public class MySqlProfesorDAO implements IProfesorDAO{
     
-    final String GETALL = "{call pa_listar_provincias()}";
-    final String COLUMNAS = "SELECT * FROM Provincias LIMIT 0";
-    final String INSERT = "{call pa_insertar_provincias(?,?)}";
-    final String UPDATE = "{call pa_modificar_provincias(?, ?, ?)}";
-    final String DELETE = "{call pa_eliminar_provincias(?)}";
-    final String BUSQUEDA = "{call pa_buscar_provincias(?)}";
+    final String GETALL = "{call pa_listar_profesores()}";
+    final String COLUMNAS = "SELECT * FROM Profesores LIMIT 0";
+    final String INSERT = "{call pa_insertar_profesor(?,?,?,?,?,?,?,?)}";
+    final String UPDATE = "{call pa_modificar_profesor(?,?,?,?,?,?,?,?,?)}";
+    final String DELETE = "{call pa_eliminar_profesor(?)}";
+    final String BUSQUEDA = "{call pa_buscar_profesor(?)}";
 
     private Connection cn;
 
-    public MySqlProvinciaDAO(Connection cn) {
+    public MySqlProfesorDAO(Connection cn) {
         this.cn = cn;
     }
 
     @Override
-    public void insertar(Provincia o) throws DAOException {
+    public void insertar(Profesor o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
         try{
             cs = cn.prepareCall(INSERT);
             int i = 1;
+            cs.setString(i++,o.getDni());
             cs.setString(i++,o.getNombre());
-            cs.setInt(i++,o.getId_depa());
+            cs.setString(i++,o.getPapellido());
+            cs.setString(i++,o.getSapellido());
+            cs.setDate(i++, Date.valueOf(o.getFnacimiento()));
+            cs.setString(i++,o.getTelefono());
+            cs.setInt(i++,o.getId_prov());
+            cs.setInt(i++,o.getId_carrera());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar el registro!!!");
                
@@ -63,16 +69,22 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public void modificar(Provincia o) throws DAOException {
+    public void modificar(Profesor o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
         try{
             cs = cn.prepareCall(UPDATE);
             int i = 1;
+            cs.setString(i++,o.getDni());
             cs.setString(i++,o.getNombre());
-            cs.setInt(i++,o.getId_depa());
+            cs.setString(i++,o.getPapellido());
+            cs.setString(i++,o.getSapellido());
+            cs.setDate(i++, Date.valueOf(o.getFnacimiento()));
+            cs.setString(i++,o.getTelefono());
             cs.setInt(i++,o.getId_prov());
+            cs.setInt(i++,o.getId_carrera());
+            cs.setInt(i++,o.getId_profe());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la modificación del registro!!!");
                
@@ -89,14 +101,14 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public void eliminar(Provincia o) throws DAOException {
+    public void eliminar(Profesor o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
         try{
             cs = cn.prepareCall(DELETE);
             int i = 1;
-            cs.setInt(i++,o.getId_prov());
+            cs.setInt(i++,o.getId_profe());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la eliminación del registro!!!");
                
@@ -113,10 +125,10 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public List<Provincia> obtenerTodos() throws DAOException {
+    public List<Profesor> obtenerTodos() throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        List<Provincia> lista = new ArrayList<>();
+        List<Profesor> lista = new ArrayList<>();
         try {
             cs = cn.prepareCall(GETALL);
             rs = cs.executeQuery();
@@ -137,15 +149,21 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public Provincia obtenerxID(Integer id) throws DAOException {
+    public Profesor obtenerxID(Integer id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private Provincia getRS(ResultSet rs) throws SQLException{
-        return new Provincia(
-                rs.getInt("id_prov"),
+    private Profesor getRS(ResultSet rs) throws SQLException{
+        return new Profesor(
+                rs.getInt("id_profe"),
+                rs.getString("dni"),
                 rs.getString("nombre"),
-                rs.getInt("id_depa")
+                rs.getString("papellido"),
+                rs.getString("sapellido"),
+                rs.getDate("fnacimiento").toLocalDate(),
+                rs.getString("telefono"),
+                rs.getInt("id_prov"),
+                rs.getInt("id_carrera")
             );
     }
 
@@ -177,10 +195,10 @@ public class MySqlProvinciaDAO implements IProvinciaDAO{
     }
 
     @Override
-    public List<Provincia> obtenerBusqueda(String valor) throws DAOException {
+    public List<Profesor> obtenerBusqueda(String valor) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        List<Provincia> lista = new ArrayList<>();
+        List<Profesor> lista = new ArrayList<>();
         try {
             cs = cn.prepareCall(BUSQUEDA);
             int i=1;

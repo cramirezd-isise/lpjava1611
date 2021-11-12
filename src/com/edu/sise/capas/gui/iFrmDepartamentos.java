@@ -6,33 +6,28 @@
 package com.edu.sise.capas.gui;
 
 import com.edu.sise.capas.entity.Departamento;
-import com.edu.sise.capas.entity.Provincia;
 import com.edu.sise.capas.logic.DepartamentoLogic;
-import com.edu.sise.capas.logic.ProvinciaLogic;
 import java.util.ResourceBundle;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Carlos
  */
-public class iFrmProvincias extends javax.swing.JInternalFrame {
+public class iFrmDepartamentos extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form iFrmProvincias
+     * Creates new form iFrmDepartamentos
      */
-    ProvinciaLogic logic;
-    DepartamentoLogic logicDepartamento;
+    DepartamentoLogic logic;
     int pagina = 0;
     int contador=0;
     int total=0;
     
     ResourceBundle rb = ResourceBundle.getBundle("com.edu.sise.capas.gui.mensajes");
     
-    public iFrmProvincias() {
+    public iFrmDepartamentos() {
         initComponents();
-        llenarDepartamentosCB();
     }
 
     /**
@@ -49,8 +44,6 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
         txtID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        cbDepartamentos = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLista = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
@@ -62,7 +55,7 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setTitle("Mantenedor de Provincias");
+        setTitle("Mantenedor de Departamentos");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -87,33 +80,19 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
 
         jLabel2.setText("NOMBRE");
 
-        cbDepartamentos.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbDepartamentosItemStateChanged(evt);
-            }
-        });
-
-        jLabel9.setText("DEPARTAMENTO");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(68, 68, 68)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbDepartamentos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(68, 68, 68)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -127,11 +106,7 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(cbDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         tbLista.setModel(new javax.swing.table.DefaultTableModel(
@@ -202,7 +177,7 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
                 .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,11 +233,11 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
                         .addComponent(btnCerrar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 51, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
@@ -276,7 +251,7 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
         
-        logic = new ProvinciaLogic();
+        logic = new DepartamentoLogic();
         try {
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -286,11 +261,11 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        logic = new ProvinciaLogic();
-        Provincia objProvincia =  null;
+        logic = new DepartamentoLogic();
+        Departamento objDepartamento =  null;
         try {
-            objProvincia = getProvincia();
-            logic.insertar(objProvincia);
+            objDepartamento = getDepartamento();
+            logic.insertar(objDepartamento);
             JOptionPane.showMessageDialog(null, "Se registro correctamente!!!");
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -300,9 +275,9 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        logic = new ProvinciaLogic();
+        logic = new DepartamentoLogic();
         try {
-            logic.modificar(getProvincia());
+            logic.modificar(getDepartamento());
             JOptionPane.showMessageDialog(null, rb.getString("mensaje_modificacion"));
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -314,7 +289,7 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int fila;
         fila = tbLista.getSelectedRow();
-        int id, id_depa;
+        int id;
         String nombre;
         
         if(fila>=0){
@@ -322,29 +297,15 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
             //Posiciones: 0 - 1 - 2
             id = Integer.parseInt(tbLista.getValueAt(fila, 0)+"");
             nombre = tbLista.getValueAt(fila, 1)+"";
-            id_depa = Integer.parseInt(tbLista.getValueAt(fila, 2)+"");
             txtID.setText(id+"");
             txtNombre.setText(nombre);
-            
-            //logica para seleccionar un elemento en el combobox
-            DefaultComboBoxModel modeloCB = (DefaultComboBoxModel)cbDepartamentos.getModel();
-            Departamento objDepartamento =  null;
-            for(int i=0;i<modeloCB.getSize();i++){
-                objDepartamento = (Departamento)modeloCB.getElementAt(i);
-                
-                if(objDepartamento.getId_depa()==id_depa){
-                    modeloCB.setSelectedItem(modeloCB.getElementAt(i));
-                    break;
-                }
-            }
-            
         }
     }//GEN-LAST:event_tbListaMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         String valor = txtBusqueda.getText();
-        logic = new ProvinciaLogic();
+        logic = new DepartamentoLogic();
         
         try {
             logic.imprimirTB(tbLista, logic.obtenerBusqueda(valor));
@@ -355,9 +316,9 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        logic = new ProvinciaLogic();
+        logic = new DepartamentoLogic();
         try {
-            logic.eliminar(getProvincia());
+            logic.eliminar(getDepartamento());
             JOptionPane.showMessageDialog(null, rb.getString("mensaje_eliminar"));
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -370,16 +331,6 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
 //        cbCantReg.setSelectedIndex(1);
     }//GEN-LAST:event_formInternalFrameOpened
 
-    private void cbDepartamentosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDepartamentosItemStateChanged
-        // TODO add your handling code here:
-//        Departamento obj = null;
-//        
-//        obj = (Departamento)cbDepartamentos.getSelectedItem();
-//        
-//        JOptionPane.showMessageDialog(null, obj.getId_depa());
-        
-    }//GEN-LAST:event_cbDepartamentosItemStateChanged
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -388,10 +339,8 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cbDepartamentos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -401,21 +350,11 @@ public class iFrmProvincias extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
-    Provincia getProvincia(){
+    Departamento getDepartamento(){
 
-        return new Provincia(
+        return new Departamento(
                 Integer.parseInt(txtID.getText()),
-                txtNombre.getText(),
-                ((Departamento)cbDepartamentos.getSelectedItem()).getId_depa()
+                txtNombre.getText()
             );
-    }
-    
-    private void llenarDepartamentosCB(){
-        logicDepartamento = new DepartamentoLogic();
-        try {
-            logicDepartamento.imprimirCB(cbDepartamentos);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
     }
 }

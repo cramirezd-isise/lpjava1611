@@ -6,11 +6,13 @@
 package com.edu.sise.capas.dao;
 
 import com.edu.sise.capas.entity.Carrera;
+import java.util.List;
 
 /**
  *
  * @author Carlos
  */
 public interface ICarreraDAO extends GenericDAO<Carrera, Integer>{
-    
+    List<String> obtenerNombresColumnas() throws DAOException;
+    List<Carrera> obtenerBusqueda(String valor) throws DAOException;
 }
