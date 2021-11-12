@@ -10,7 +10,14 @@ import com.edu.sise.capas.dao.mysql.MySqlDAOManager;
 import com.edu.sise.capas.entity.Profesor;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -72,5 +79,33 @@ public class ProfesorLogic {
     
     public void imprimirTB(JTable jtable, DefaultTableModel modelo) throws Exception{
         jtable.setModel(modelo);
+    }
+    
+    public void generarReporte() throws Exception{
+        JasperReport reporte;
+        String ruta ="D:\\reportes\\rpt_profesores.jasper";
+        reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
+        JasperPrint jprint = JasperFillManager.fillReport(reporte, null,
+                new JRBeanCollectionDataSource(dao.obtenerTodos())
+                );
+        JasperViewer jViewer = new JasperViewer(jprint,false);
+        jViewer.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jViewer.setVisible(true);
+    }
+    
+    public void generarReporte(List<Profesor> lista) throws Exception{
+        JasperReport reporte;
+        String ruta ="D:\\reportes\\rpt_profesores.jasper";
+        reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
+        JasperPrint jprint = JasperFillManager.fillReport(reporte, null,
+                new JRBeanCollectionDataSource(lista)
+                );
+        JasperViewer jViewer = new JasperViewer(jprint,false);
+        jViewer.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jViewer.setVisible(true);
+    }
+    
+    public List<Profesor> obtenerListaBusqueda(String valor) throws Exception{
+        return dao.obtenerBusqueda(valor);
     }
 }
