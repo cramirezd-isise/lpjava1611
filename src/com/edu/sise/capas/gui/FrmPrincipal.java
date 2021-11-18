@@ -35,6 +35,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenu();
         mniEmpleados = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         mitemUsuarios = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -74,6 +76,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBar2.add(jMenuItem5);
+
+        jMenuItem7.setText("Alumnos");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenuBar2.add(jMenuItem7);
+
+        jMenuItem8.setText("Tutores");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenuBar2.add(jMenuItem8);
 
         mitemUsuarios.setText("Usuarios");
         mitemUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -195,6 +213,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrmInterno.show();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        iFrmAlumnos ifrmInterno = new iFrmAlumnos();
+        this.add(ifrmInterno);
+        ifrmInterno.show();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        iFrmTutores ifrmInterno = new iFrmTutores();
+        this.add(ifrmInterno);
+        ifrmInterno.show();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -243,6 +275,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem mitemUsuarios;
     private javax.swing.JMenuItem mniEmpleados;
     private javax.swing.JMenu mniSalir;

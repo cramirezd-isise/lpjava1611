@@ -6,8 +6,8 @@
 package com.edu.sise.capas.dao.mysql;
 
 import com.edu.sise.capas.dao.DAOException;
-import com.edu.sise.capas.dao.IProfesorDAO;
-import com.edu.sise.capas.entity.Profesor;
+import com.edu.sise.capas.dao.ITutorDAO;
+import com.edu.sise.capas.entity.Tutor;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -22,23 +22,23 @@ import java.util.List;
  *
  * @author Carlos
  */
-public class MySqlProfesorDAO implements IProfesorDAO{
+public class MySqlTutorDAO implements ITutorDAO{
     
-    final String GETALL = "{call pa_listar_profesores()}";
-    final String COLUMNAS = "{call pa_obtener_columnas_profesor()}";
-    final String INSERT = "{call pa_insertar_profesor(?,?,?,?,?,?,?,?)}";
-    final String UPDATE = "{call pa_modificar_profesor(?,?,?,?,?,?,?,?,?)}";
-    final String DELETE = "{call pa_eliminar_profesor(?)}";
-    final String BUSQUEDA = "{call pa_buscar_profesor(?)}";
+    final String GETALL = "{call pa_listar_tutores()}";
+    final String COLUMNAS = "{call pa_obtener_columnas_tutor()}";
+    final String INSERT = "{call pa_insertar_tutor(?,?,?,?,?,?,?)}";
+    final String UPDATE = "{call pa_modificar_tutor(?,?,?,?,?,?,?,?)}";
+    final String DELETE = "{call pa_eliminar_tutor(?)}";
+    final String BUSQUEDA = "{call pa_buscar_tutor(?)}";
 
     private Connection cn;
 
-    public MySqlProfesorDAO(Connection cn) {
+    public MySqlTutorDAO(Connection cn) {
         this.cn = cn;
     }
 
     @Override
-    public void insertar(Profesor o) throws DAOException {
+    public void insertar(Tutor o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
@@ -52,7 +52,6 @@ public class MySqlProfesorDAO implements IProfesorDAO{
             cs.setDate(i++, Date.valueOf(o.getFnacimiento()));
             cs.setString(i++,o.getTelefono());
             cs.setInt(i++,o.getId_prov());
-            cs.setInt(i++,o.getId_carrera());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar el registro!!!");
                
@@ -69,7 +68,7 @@ public class MySqlProfesorDAO implements IProfesorDAO{
     }
 
     @Override
-    public void modificar(Profesor o) throws DAOException {
+    public void modificar(Tutor o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
@@ -83,8 +82,7 @@ public class MySqlProfesorDAO implements IProfesorDAO{
             cs.setDate(i++, Date.valueOf(o.getFnacimiento()));
             cs.setString(i++,o.getTelefono());
             cs.setInt(i++,o.getId_prov());
-            cs.setInt(i++,o.getId_carrera());
-            cs.setInt(i++,o.getId_profe());
+            cs.setInt(i++,o.getId_tutor());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la modificación del registro!!!");
                
@@ -101,14 +99,14 @@ public class MySqlProfesorDAO implements IProfesorDAO{
     }
 
     @Override
-    public void eliminar(Profesor o) throws DAOException {
+    public void eliminar(Tutor o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
         
         try{
             cs = cn.prepareCall(DELETE);
             int i = 1;
-            cs.setInt(i++,o.getId_profe());
+            cs.setInt(i++,o.getId_tutor());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la eliminación del registro!!!");
                
@@ -125,10 +123,10 @@ public class MySqlProfesorDAO implements IProfesorDAO{
     }
 
     @Override
-    public List<Profesor> obtenerTodos() throws DAOException {
+    public List<Tutor> obtenerTodos() throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        List<Profesor> lista = new ArrayList<>();
+        List<Tutor> lista = new ArrayList<>();
         try {
             cs = cn.prepareCall(GETALL);
             rs = cs.executeQuery();
@@ -149,13 +147,13 @@ public class MySqlProfesorDAO implements IProfesorDAO{
     }
 
     @Override
-    public Profesor obtenerxID(Integer id) throws DAOException {
+    public Tutor obtenerxID(Integer id) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private Profesor getRS(ResultSet rs) throws SQLException{
-        return new Profesor(
-                rs.getInt("id_profe"),
+    private Tutor getRS(ResultSet rs) throws SQLException{
+        return new Tutor(
+                rs.getInt("id_tutor"),
                 rs.getString("dni"),
                 rs.getString("nombre"),
                 rs.getString("papellido"),
@@ -163,9 +161,7 @@ public class MySqlProfesorDAO implements IProfesorDAO{
                 rs.getDate("fnacimiento").toLocalDate(),
                 rs.getString("telefono"),
                 rs.getInt("id_prov"),
-                rs.getInt("id_carrera"),
-                rs.getString("des_prov"),
-                rs.getString("des_carrera")
+                rs.getString("des_prov")
             );
     }
 
@@ -197,10 +193,10 @@ public class MySqlProfesorDAO implements IProfesorDAO{
     }
 
     @Override
-    public List<Profesor> obtenerBusqueda(String valor) throws DAOException {
+    public List<Tutor> obtenerBusqueda(String valor) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        List<Profesor> lista = new ArrayList<>();
+        List<Tutor> lista = new ArrayList<>();
         try {
             cs = cn.prepareCall(BUSQUEDA);
             int i=1;

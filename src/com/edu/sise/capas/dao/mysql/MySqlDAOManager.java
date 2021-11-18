@@ -6,12 +6,14 @@
 package com.edu.sise.capas.dao.mysql;
 
 import com.edu.sise.capas.dao.Conexion;
+import com.edu.sise.capas.dao.IAlumnoDAO;
 import com.edu.sise.capas.dao.ICarreraDAO;
 import com.edu.sise.capas.dao.IDAOManager;
 import com.edu.sise.capas.dao.IDepartamentoDAO;
 import com.edu.sise.capas.dao.IEmpleadoDAO;
 import com.edu.sise.capas.dao.IProfesorDAO;
 import com.edu.sise.capas.dao.IProvinciaDAO;
+import com.edu.sise.capas.dao.ITutorDAO;
 import java.sql.Connection;
 
 /**
@@ -38,6 +40,8 @@ public class MySqlDAOManager implements IDAOManager{
     private ICarreraDAO carreraDao = null;
     private IDepartamentoDAO departamentoDao = null;
     private IProfesorDAO profesorDao = null;
+    private ITutorDAO tutorDao = null;
+    private IAlumnoDAO alumnoDao = null;
     
     @Override
     public IEmpleadoDAO getEmpleadoDAO() {
@@ -73,6 +77,20 @@ public class MySqlDAOManager implements IDAOManager{
         if(profesorDao==null)
             profesorDao = new MySqlProfesorDAO(cn);
         return profesorDao;
+    }
+
+    @Override
+    public ITutorDAO getTutorDAO() {
+        if(tutorDao==null)
+            tutorDao = new MySqlTutorDAO(cn);
+        return tutorDao;
+    }
+
+    @Override
+    public IAlumnoDAO getAlumnoDAO() {
+        if(alumnoDao==null)
+            alumnoDao = new MySqlAlumnoDAO(cn);
+        return alumnoDao;
     }
     
 }

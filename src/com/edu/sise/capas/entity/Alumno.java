@@ -11,54 +11,56 @@ import java.time.LocalDate;
  *
  * @author Carlos
  */
-public class Profesor {
-    private Integer id_profe;
+public class Alumno {
+    private Integer id_alum;
     private String dni;
     private String nombre;
     private String papellido;
     private String sapellido;
     private LocalDate fnacimiento;
     private String telefono;
+    private Integer id_tutor;
     private Integer id_prov;
-    private Integer id_carrera;
     private String des_prov;
-    private String des_carrera;
+    private String des_tutor;
 
-    public Profesor() {
+    public Alumno() {
     }
 
-    public Profesor(Integer id_profe, String dni, String nombre, String papellido, String sapellido, LocalDate fnacimiento, String telefono, Integer id_prov, Integer id_carrera) {
-        this.id_profe = id_profe;
+    public Alumno(Integer id_alum, String dni, String nombre, String papellido, String sapellido, LocalDate fnacimiento, String telefono, Integer id_tutor, Integer id_prov) {
+        this.id_alum = id_alum;
         this.dni = dni;
         this.nombre = nombre;
         this.papellido = papellido;
         this.sapellido = sapellido;
         this.fnacimiento = fnacimiento;
         this.telefono = telefono;
+        this.id_tutor = id_tutor;
         this.id_prov = id_prov;
-        this.id_carrera = id_carrera;
     }
+    
+    
 
-    public Profesor(Integer id_profe, String dni, String nombre, String papellido, String sapellido, LocalDate fnacimiento, String telefono, Integer id_prov, Integer id_carrera, String des_prov, String des_carrera) {
-        this.id_profe = id_profe;
+    public Alumno(Integer id_alum, String dni, String nombre, String papellido, String sapellido, LocalDate fnacimiento, String telefono, Integer id_tutor, Integer id_prov, String des_prov, String des_tutor) {
+        this.id_alum = id_alum;
         this.dni = dni;
         this.nombre = nombre;
         this.papellido = papellido;
         this.sapellido = sapellido;
         this.fnacimiento = fnacimiento;
         this.telefono = telefono;
+        this.id_tutor = id_tutor;
         this.id_prov = id_prov;
-        this.id_carrera = id_carrera;
         this.des_prov = des_prov;
-        this.des_carrera = des_carrera;
+        this.des_tutor = des_tutor;
     }
 
-    public Integer getId_profe() {
-        return id_profe;
+    public Integer getId_alum() {
+        return id_alum;
     }
 
-    public void setId_profe(Integer id_profe) {
-        this.id_profe = id_profe;
+    public void setId_alum(Integer id_alum) {
+        this.id_alum = id_alum;
     }
 
     public String getDni() {
@@ -109,20 +111,20 @@ public class Profesor {
         this.telefono = telefono;
     }
 
+    public Integer getId_tutor() {
+        return id_tutor;
+    }
+
+    public void setId_tutor(Integer id_tutor) {
+        this.id_tutor = id_tutor;
+    }
+
     public Integer getId_prov() {
         return id_prov;
     }
 
     public void setId_prov(Integer id_prov) {
         this.id_prov = id_prov;
-    }
-
-    public Integer getId_carrera() {
-        return id_carrera;
-    }
-
-    public void setId_carrera(Integer id_carrera) {
-        this.id_carrera = id_carrera;
     }
 
     public String getDes_prov() {
@@ -133,14 +135,14 @@ public class Profesor {
         this.des_prov = des_prov;
     }
 
-    public String getDes_carrera() {
-        return des_carrera;
+    public String getDes_tutor() {
+        return des_tutor;
     }
 
-    public void setDes_carrera(String des_carrera) {
-        this.des_carrera = des_carrera;
+    public void setDes_tutor(String des_tutor) {
+        this.des_tutor = des_tutor;
     }
-    
+
     
     
 }

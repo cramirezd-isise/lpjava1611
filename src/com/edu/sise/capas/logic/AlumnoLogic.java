@@ -5,9 +5,9 @@
  */
 package com.edu.sise.capas.logic;
 
-import com.edu.sise.capas.dao.IProfesorDAO;
+import com.edu.sise.capas.dao.IAlumnoDAO;
 import com.edu.sise.capas.dao.mysql.MySqlDAOManager;
-import com.edu.sise.capas.entity.Profesor;
+import com.edu.sise.capas.entity.Alumno;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
@@ -23,12 +23,12 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Carlos
  */
-public class ProfesorLogic {
+public class AlumnoLogic {
     MySqlDAOManager factory = MySqlDAOManager.getInstancia(); //Singleton
-    IProfesorDAO dao = factory.getProfesorDAO();
+    IAlumnoDAO dao = factory.getAlumnoDAO();
     DefaultTableModel modelo =  null;
     
-    private DefaultTableModel getModelo(DefaultTableModel modelo, List<Profesor> lista)throws Exception{
+    private DefaultTableModel getModelo(DefaultTableModel modelo, List<Alumno> lista)throws Exception{
         modelo = new DefaultTableModel();
         List<String> listaNomColumn = dao.obtenerNombresColumnas();
         
@@ -36,19 +36,19 @@ public class ProfesorLogic {
             modelo.addColumn(columna.toUpperCase().replace('_', ' '));
         }
         //llenar el modelo con la lista
-        for(Profesor obj : lista){
+        for(Alumno obj : lista){
             Object data[] = {
-              obj.getId_profe(),
+              obj.getId_alum(),
               obj.getDni(),
               obj.getNombre(),
               obj.getPapellido(),
               obj.getSapellido(),
               obj.getFnacimiento(),
               obj.getTelefono(),
+              obj.getId_tutor(),
               obj.getId_prov(),
-              obj.getId_carrera(),
               obj.getDes_prov(),
-              obj.getDes_carrera()
+              obj.getDes_tutor()
             };
             modelo.addRow(data);
         }
@@ -63,15 +63,15 @@ public class ProfesorLogic {
         jtable.setModel(obtenerTodos());
     }
     
-    public void insertar(Profesor o) throws Exception {
+    public void insertar(Alumno o) throws Exception {
         dao.insertar(o);
     }
     
-    public void modificar(Profesor o) throws Exception {
+    public void modificar(Alumno o) throws Exception {
         dao.modificar(o);
     }
     
-    public void eliminar(Profesor o) throws Exception {
+    public void eliminar(Alumno o) throws Exception {
         dao.eliminar(o);
     }
     
@@ -85,7 +85,7 @@ public class ProfesorLogic {
     
     public void generarReporte() throws Exception{
         JasperReport reporte;
-        String ruta ="D:\\reportes\\rpt_profesores.jasper";
+        String ruta ="D:\\reportes\\rpt_alumnos.jasper";
         reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
         JasperPrint jprint = JasperFillManager.fillReport(reporte, null,
                 new JRBeanCollectionDataSource(dao.obtenerTodos())
@@ -95,9 +95,9 @@ public class ProfesorLogic {
         jViewer.setVisible(true);
     }
     
-    public void generarReporte(List<Profesor> lista) throws Exception{
+    public void generarReporte(List<Alumno> lista) throws Exception{
         JasperReport reporte;
-        String ruta ="D:\\reportes\\rpt_profesores.jasper";
+        String ruta ="D:\\reportes\\rpt_alumnos.jasper";
         reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
         JasperPrint jprint = JasperFillManager.fillReport(reporte, null,
                 new JRBeanCollectionDataSource(lista)
@@ -107,7 +107,7 @@ public class ProfesorLogic {
         jViewer.setVisible(true);
     }
     
-    public List<Profesor> obtenerListaBusqueda(String valor) throws Exception{
+    public List<Alumno> obtenerListaBusqueda(String valor) throws Exception{
         return dao.obtenerBusqueda(valor);
     }
 }
