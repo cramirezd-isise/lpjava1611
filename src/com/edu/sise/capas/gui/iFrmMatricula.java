@@ -5,14 +5,12 @@
  */
 package com.edu.sise.capas.gui;
 
-import com.edu.sise.capas.entity.Carrera;
-import com.edu.sise.capas.entity.Profesor;
-import com.edu.sise.capas.entity.ProfesorForm;
-import com.edu.sise.capas.entity.Provincia;
-import com.edu.sise.capas.logic.CarreraLogic;
-import com.edu.sise.capas.logic.ProfesorLogic;
-import com.edu.sise.capas.logic.ProvinciaLogic;
-import com.edu.sise.capas.utils.Utils;
+import com.edu.sise.capas.entity.Matricula;
+import com.edu.sise.capas.entity.Alumno;
+import com.edu.sise.capas.entity.Asignatura;
+import com.edu.sise.capas.logic.MatriculaLogic;
+import com.edu.sise.capas.logic.AlumnoLogic;
+import com.edu.sise.capas.logic.AsignaturaLogic;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
@@ -21,24 +19,24 @@ import javax.swing.JOptionPane;
  *
  * @author Carlos
  */
-public class iFrmProfesores extends javax.swing.JInternalFrame {
+public class iFrmMatricula extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form iFrmProfesors
+     * Creates new form iFrmMatriculas
      */
-    ProfesorLogic logic;
-    ProvinciaLogic logicProvincia;
-    CarreraLogic logicCarrera;
+    MatriculaLogic logic;
+    AlumnoLogic logicAlumno;
+    AsignaturaLogic logicAsignatura;
     int pagina = 0;
     int contador=0;
     int total=0;
     
     ResourceBundle rb = ResourceBundle.getBundle("com.edu.sise.capas.gui.mensajes");
     
-    public iFrmProfesores() {
+    public iFrmMatricula() {
         initComponents();
-        llenarProvinciasCB();
-        llenarCarrerasCB();
+        llenarAlumnosCB();
+        llenarAsignaturasCB();
     }
 
     /**
@@ -51,24 +49,12 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtApellidoPaterno = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtApellidoMaterno = new javax.swing.JTextField();
-        dtpFechaNacimiento = new org.jdatepicker.JDatePicker();
-        jLabel6 = new javax.swing.JLabel();
-        txtDNI = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        cbProvincias = new javax.swing.JComboBox<>();
-        cbCarreras = new javax.swing.JComboBox<>();
+        cbAlumnos = new javax.swing.JComboBox<>();
+        cbAsignatura = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        dtpFechaMatricula = new org.jdatepicker.JDatePicker();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbLista = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
@@ -85,7 +71,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
         btnDer = new javax.swing.JButton();
         btnReporte = new javax.swing.JButton();
 
-        setTitle("Mantenedor de Profesores");
+        setTitle("Operación Matricula");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -106,23 +92,11 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Datos"));
 
-        jLabel1.setText("ID");
+        jLabel9.setText("ALUMNO");
 
-        jLabel2.setText("NOMBRE");
+        jLabel10.setText("ASIGNATURA");
 
-        jLabel3.setText("FEC. NAC.");
-
-        jLabel4.setText("APE. PAT.");
-
-        jLabel5.setText("APE. MAT.");
-
-        jLabel6.setText("DNI");
-
-        jLabel8.setText("TELEFONO");
-
-        jLabel9.setText("PROVINCIA");
-
-        jLabel10.setText("CARRERA");
+        jLabel3.setText("FEC. MATRICULA");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -131,75 +105,37 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtNombre)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(dtpFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtApellidoMaterno)
-                            .addComponent(txtApellidoPaterno)))
+                            .addComponent(cbAlumnos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbAsignatura, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(40, 40, 40))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbProvincias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbCarreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(40, 40, 40))
+                        .addComponent(dtpFechaMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel3)
-                    .addComponent(dtpFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(cbProvincias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cbCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addComponent(dtpFechaMatricula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -271,7 +207,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
                 .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,11 +283,11 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
                         .addGap(5, 5, 5))
                     .addComponent(btnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnReporte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnReporte, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
@@ -370,21 +306,20 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCerrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnReporte)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnReporte))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnIzq)
-                    .addComponent(btnDer)
-                    .addComponent(jLabel7)
-                    .addComponent(cbCantReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnIzq)
+                            .addComponent(btnDer)
+                            .addComponent(jLabel7)
+                            .addComponent(cbCantReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -398,7 +333,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
         
-        logic = new ProfesorLogic();
+        logic = new MatriculaLogic();
         try {
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -408,28 +343,24 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        logic = new ProfesorLogic();
-        Profesor objProfesor =  null;
+        logic = new MatriculaLogic();
+        Matricula objMatricula =  null;
         try {
-
-            logic.hayInputError(getProfesorForm());
-            objProfesor = getProfesor();
-            objProfesor.setId_profe(0);
-            logic.insertar(objProfesor);
+            objMatricula = getMatricula();
+            logic.insertar(objMatricula);
             JOptionPane.showMessageDialog(null, rb.getString("mensaje_insertar"));
-            limpiarValores();
+            //limpiarValores();
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), 
-                    "Módulo Profesor", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        logic = new ProfesorLogic();
+        logic = new MatriculaLogic();
         try {
-            logic.modificar(getProfesor());
+            logic.modificar(getMatricula());
             JOptionPane.showMessageDialog(null, rb.getString("mensaje_modificacion"));
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -441,49 +372,36 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int fila;
         fila = tbLista.getSelectedRow();
-        int id, id_prov, id_carrera;
-        String dni, nombre, ape_pat, ape_mat, telefono;
-        LocalDate fnacimiento;
-        logicCarrera = new CarreraLogic();
-        logicProvincia = new ProvinciaLogic();
+        int id_alum, id_asig;
+        LocalDate fecha_matricula;
+        logicAlumno = new AlumnoLogic();
 
         int x =0;
         if(fila>=0){
             //Columnas: ID - NOMBRE - CLAVE
             //Posiciones: 0 - 1 - 2
-            id = Integer.parseInt(tbLista.getValueAt(fila, x++)+"");
-            dni = tbLista.getValueAt(fila, x++)+"";
-            nombre = tbLista.getValueAt(fila, x++)+"";
-            ape_pat = tbLista.getValueAt(fila, x++)+"";
-            ape_mat = tbLista.getValueAt(fila, x++)+"";
-            fnacimiento = LocalDate.parse(tbLista.getValueAt(fila, x++)+"");
-            telefono = tbLista.getValueAt(fila, x++)+"";
-            id_prov = Integer.parseInt(tbLista.getValueAt(fila, x++)+"");
-            id_carrera = Integer.parseInt(tbLista.getValueAt(fila, x++)+"");
-            txtID.setText(id+"");
-            txtDNI.setText(dni);
-            txtNombre.setText(nombre);
-            txtApellidoPaterno.setText(ape_pat);
-            txtApellidoMaterno.setText(ape_mat);
-            dtpFechaNacimiento.getModel().setDate(
-                    fnacimiento.getYear(),
-                    fnacimiento.getMonthValue()-1, 
-                    fnacimiento.getDayOfMonth());
-            dtpFechaNacimiento.getModel().setSelected(true);
-            txtTelefono.setText(telefono);
-            
+            id_alum = Integer.parseInt(tbLista.getValueAt(fila, x++)+"");
+            id_asig = Integer.parseInt(tbLista.getValueAt(fila, x++)+"");
+            fecha_matricula = LocalDate.parse(tbLista.getValueAt(fila, x++)+"");
+
+                        
              //logica para seleccionar un elemento en el combobox
              
-            logicProvincia.buscarCB(cbProvincias, id_prov);
+            logicAlumno.buscarCB(cbAlumnos, id_alum);
+            logicAsignatura.buscarCB(cbAsignatura, id_asig);
+             dtpFechaMatricula.getModel().setDate(
+                    fecha_matricula.getYear(),
+                    fecha_matricula.getMonthValue()-1, 
+                    fecha_matricula.getDayOfMonth());
+            dtpFechaMatricula.getModel().setSelected(true);
              //logica para seleccionar un elemento en el combobox
-            logicCarrera.buscarCB(cbCarreras, id_carrera);
         }
     }//GEN-LAST:event_tbListaMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         String v1 = txtBusqueda.getText();
-        logic = new ProfesorLogic();
+        logic = new MatriculaLogic();
         
         try {
             logic.imprimirTB(tbLista, logic.obtenerBusqueda(v1));
@@ -494,9 +412,9 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        logic = new ProfesorLogic();
+        logic = new MatriculaLogic();
         try {
-            logic.eliminar(getProfesor());
+            logic.eliminar(getMatricula());
             JOptionPane.showMessageDialog(null, rb.getString("mensaje_eliminar"));
             logic.imprimirTB(tbLista);
         } catch (Exception ex) {
@@ -507,7 +425,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
     private void cbCantRegItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCantRegItemStateChanged
         // TODO add your handling code here:
         //logica para paginar
-//        logic  = new ProfesorLogic();
+//        logic  = new MatriculaLogic();
 //        try {
 //            contador=0;
 //            if(cbCantReg.getSelectedIndex()>=0){
@@ -530,7 +448,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
 
     private void btnDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDerActionPerformed
         // TODO add your handling code here:
-//        logic = new ProfesorLogic();
+//        logic = new MatriculaLogic();
 //        try {
 //            total = logic.getCount();
 //            if(cbCantReg.getSelectedIndex()>=0){
@@ -553,7 +471,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
 
     private void btnIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzqActionPerformed
         // TODO add your handling code here:
-//        logic = new ProfesorLogic();
+//        logic = new MatriculaLogic();
 //        try {
 //            total = logic.getCount();
 //            if(cbCantReg.getSelectedIndex()>=0){
@@ -579,7 +497,7 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
             
             //logica para llamar al reporte
             
-            logic = new ProfesorLogic();
+            logic = new MatriculaLogic();
             logic.generarReporte();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -597,104 +515,68 @@ public class iFrmProfesores extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnReporte;
+    private javax.swing.JComboBox<String> cbAlumnos;
+    private javax.swing.JComboBox<String> cbAsignatura;
     private javax.swing.JComboBox<String> cbCantReg;
-    private javax.swing.JComboBox<String> cbCarreras;
-    private javax.swing.JComboBox<String> cbProvincias;
-    private org.jdatepicker.JDatePicker dtpFechaNacimiento;
-    private javax.swing.JLabel jLabel1;
+    private org.jdatepicker.JDatePicker dtpFechaMatricula;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbLista;
-    private javax.swing.JTextField txtApellidoMaterno;
-    private javax.swing.JTextField txtApellidoPaterno;
     private javax.swing.JTextField txtBusqueda;
-    private javax.swing.JTextField txtDNI;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
-    ProfesorForm getProfesorForm(){
-        return new ProfesorForm(
-                txtID.getText(),
-                txtDNI.getText(),
-                txtNombre.getText(),
-                txtApellidoPaterno.getText(),
-                txtApellidoMaterno.getText(),
-                dtpFechaNacimiento.getModel().toString(), //FNacimiento
-                txtTelefono.getText(),
-                cbProvincias.getSelectedItem()+"",
-                cbCarreras.getSelectedItem()+""
-        );
-        
-    }
-    Profesor getProfesor() throws Exception{
-        //construir la fecha a partir del jDatePicker
+    Matricula getMatricula(){
         int anio, mes, dia;
-        anio = dtpFechaNacimiento.getModel().getYear();
-        mes = dtpFechaNacimiento.getModel().getMonth()+1;
-        dia = dtpFechaNacimiento.getModel().getDay();
-        
-        if((LocalDate.now().getYear()-anio)<25) throw new Exception("El Profesor no puede tener menos de 25 años!!!");
-        
-        return new Profesor(
-                Integer.parseInt(txtID.getText()),
-                txtDNI.getText(),
-                txtNombre.getText(),
-                txtApellidoPaterno.getText(),
-                txtApellidoMaterno.getText(),
-                LocalDate.of(anio,mes, dia), //FNacimiento
-                txtTelefono.getText(),
-                ((Provincia)cbProvincias.getSelectedItem()).getId_prov(),
-                ((Carrera)cbCarreras.getSelectedItem()).getId_carrera()
+        anio = dtpFechaMatricula.getModel().getYear();
+        mes = dtpFechaMatricula.getModel().getMonth()+1;
+        dia = dtpFechaMatricula.getModel().getDay();
+        return new Matricula(
+                ((Alumno)cbAlumnos.getSelectedItem()).getId_alum(),
+                ((Asignatura)cbAsignatura.getSelectedItem()).getId_asig(),
+                LocalDate.of(anio,mes, dia),
+                0
             );
     }
     
     //metodos para llenar Combos
     
-    private void llenarProvinciasCB(){
-        logicProvincia = new ProvinciaLogic();
+    private void llenarAlumnosCB(){
+        logicAlumno = new AlumnoLogic();
         try {
-            logicProvincia.imprimirCB(cbProvincias);
+            logicAlumno.imprimirCB(cbAlumnos);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
-    private void llenarCarrerasCB(){
-        logicCarrera = new CarreraLogic();
+    private void llenarAsignaturasCB(){
+        logicAsignatura = new AsignaturaLogic();
         try {
-            logicCarrera.imprimirCB(cbCarreras);
+            logicAsignatura.imprimirCB(cbAsignatura);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
-    
-    private void limpiarValores(){
-        txtID.setText("");
-        txtDNI.setText("");
-        txtNombre.setText("");
-        txtApellidoPaterno.setText("");
-        txtApellidoMaterno.setText("");
         
-        txtTelefono.setText("");
-        //logica para la fecha por defecto (la fecha de HOY)
-        dtpFechaNacimiento.getModel().setDate(
-                    LocalDate.now().getYear(),
-                    LocalDate.now().getMonthValue()-1, 
-                    LocalDate.now().getDayOfMonth());
-            dtpFechaNacimiento.getModel().setSelected(true);
-        cbProvincias.setSelectedIndex(0);
-        cbCarreras.setSelectedIndex(0);
-    }
+//    private void limpiarValores(){
+//        txtID.setText("");
+//        txtDNI.setText("");
+//        txtNombre.setText("");
+//        txtApellidoPaterno.setText("");
+//        txtApellidoMaterno.setText("");
+//        
+//        txtTelefono.setText("");
+//        //logica para la fecha por defecto (la fecha de HOY)
+//        dtpFechaNacimiento.getModel().setDate(
+//                    LocalDate.now().getYear(),
+//                    LocalDate.now().getMonthValue()-1, 
+//                    LocalDate.now().getDayOfMonth());
+//            dtpFechaNacimiento.getModel().setSelected(true);
+//        cbAlumnos.setSelectedIndex(0);
+//    }
 }

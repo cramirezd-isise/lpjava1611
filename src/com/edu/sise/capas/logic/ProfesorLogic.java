@@ -8,7 +8,12 @@ package com.edu.sise.capas.logic;
 import com.edu.sise.capas.dao.IProfesorDAO;
 import com.edu.sise.capas.dao.mysql.MySqlDAOManager;
 import com.edu.sise.capas.entity.Profesor;
+import com.edu.sise.capas.entity.ProfesorForm;
+import com.edu.sise.capas.utils.Utils;
+import java.time.LocalDate;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +32,7 @@ public class ProfesorLogic {
     MySqlDAOManager factory = MySqlDAOManager.getInstancia(); //Singleton
     IProfesorDAO dao = factory.getProfesorDAO();
     DefaultTableModel modelo =  null;
+    DefaultComboBoxModel modeloCB = null;
     
     private DefaultTableModel getModelo(DefaultTableModel modelo, List<Profesor> lista)throws Exception{
         modelo = new DefaultTableModel();
@@ -109,5 +115,42 @@ public class ProfesorLogic {
     
     public List<Profesor> obtenerListaBusqueda(String valor) throws Exception{
         return dao.obtenerBusqueda(valor);
+    }
+    
+    public void hayInputError(ProfesorForm o) throws Exception{
+        
+        if(o.getId_profe().isEmpty() || o.getId_profe().trim().length()==0) throw new Exception(Utils.getMensaje("ID", Utils.NO_VACIO));
+        if(o.getDni().isEmpty() || o.getDni().trim().length()==0) throw new Exception(Utils.getMensaje("DNI", Utils.NO_VACIO));
+        if(o.getNombre().isEmpty() || o.getNombre().trim().length()==0) throw new Exception(Utils.getMensaje("NOMBRE", Utils.NO_VACIO));
+        if(o.getPapellido().isEmpty() || o.getPapellido().trim().length()==0) throw new Exception(Utils.getMensaje("APELLIDO PATERNO", Utils.NO_VACIO));
+        if(o.getSapellido().isEmpty() || o.getSapellido().trim().length()==0) throw new Exception(Utils.getMensaje("APELLIDO MATERNO", Utils.NO_VACIO));
+
+        
+    }
+    
+    public void imprimirCB(JComboBox jComboBox)throws Exception{
+        jComboBox.setModel(getModeloCB(dao.obtenerTodos()));
+    }
+    
+    private DefaultComboBoxModel getModeloCB(List<Profesor> lista) {
+        modeloCB  = new DefaultComboBoxModel();
+        for(Profesor o: lista){
+            modeloCB.addElement(o);
+        }
+        
+        return modeloCB;
+    }
+    
+    public void buscarCB(JComboBox jComboBox, int id_profe){
+            DefaultComboBoxModel modeloCarrerasCB = (DefaultComboBoxModel)jComboBox.getModel();
+            Profesor obj =  null;
+            for(int i=0;i<modeloCarrerasCB.getSize();i++){
+                obj = (Profesor)modeloCarrerasCB.getElementAt(i);
+                
+                if(obj.getId_profe()==id_profe){
+                    modeloCarrerasCB.setSelectedItem(modeloCarrerasCB.getElementAt(i));
+                    break;
+                }
+            }
     }
 }

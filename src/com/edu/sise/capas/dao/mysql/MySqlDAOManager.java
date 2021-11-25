@@ -7,10 +7,12 @@ package com.edu.sise.capas.dao.mysql;
 
 import com.edu.sise.capas.dao.Conexion;
 import com.edu.sise.capas.dao.IAlumnoDAO;
+import com.edu.sise.capas.dao.IAsignaturaDAO;
 import com.edu.sise.capas.dao.ICarreraDAO;
 import com.edu.sise.capas.dao.IDAOManager;
 import com.edu.sise.capas.dao.IDepartamentoDAO;
 import com.edu.sise.capas.dao.IEmpleadoDAO;
+import com.edu.sise.capas.dao.IMatriculaDAO;
 import com.edu.sise.capas.dao.IProfesorDAO;
 import com.edu.sise.capas.dao.IProvinciaDAO;
 import com.edu.sise.capas.dao.ITutorDAO;
@@ -42,6 +44,8 @@ public class MySqlDAOManager implements IDAOManager{
     private IProfesorDAO profesorDao = null;
     private ITutorDAO tutorDao = null;
     private IAlumnoDAO alumnoDao = null;
+    private IAsignaturaDAO asignaturaDao = null;
+    private IMatriculaDAO matriculaDao = null;
     
     @Override
     public IEmpleadoDAO getEmpleadoDAO() {
@@ -91,6 +95,20 @@ public class MySqlDAOManager implements IDAOManager{
         if(alumnoDao==null)
             alumnoDao = new MySqlAlumnoDAO(cn);
         return alumnoDao;
+    }
+
+    @Override
+    public IAsignaturaDAO getAsignaturaDAO() {
+        if(asignaturaDao==null)
+            asignaturaDao = new MySqlAsignaturaDAO(cn);
+        return asignaturaDao;
+    }
+
+    @Override
+    public IMatriculaDAO getMatriculaDAO() {
+        if(matriculaDao==null)
+            matriculaDao = new MySqlMatriculaDAO(cn);
+        return matriculaDao;
     }
     
 }

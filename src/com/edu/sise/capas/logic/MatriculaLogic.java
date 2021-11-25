@@ -5,9 +5,9 @@
  */
 package com.edu.sise.capas.logic;
 
-import com.edu.sise.capas.dao.IAlumnoDAO;
+import com.edu.sise.capas.dao.IMatriculaDAO;
 import com.edu.sise.capas.dao.mysql.MySqlDAOManager;
-import com.edu.sise.capas.entity.Alumno;
+import com.edu.sise.capas.entity.Matricula;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -25,13 +25,13 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Carlos
  */
-public class AlumnoLogic {
+public class MatriculaLogic {
     MySqlDAOManager factory = MySqlDAOManager.getInstancia(); //Singleton
-    IAlumnoDAO dao = factory.getAlumnoDAO();
+    IMatriculaDAO dao = factory.getMatriculaDAO();
     DefaultTableModel modelo =  null;
     DefaultComboBoxModel modeloCB = null;
     
-    private DefaultTableModel getModelo(DefaultTableModel modelo, List<Alumno> lista)throws Exception{
+    private DefaultTableModel getModelo(DefaultTableModel modelo, List<Matricula> lista)throws Exception{
         modelo = new DefaultTableModel();
         List<String> listaNomColumn = dao.obtenerNombresColumnas();
         
@@ -39,19 +39,14 @@ public class AlumnoLogic {
             modelo.addColumn(columna.toUpperCase().replace('_', ' '));
         }
         //llenar el modelo con la lista
-        for(Alumno obj : lista){
+        for(Matricula obj : lista){
             Object data[] = {
               obj.getId_alum(),
-              obj.getDni(),
-              obj.getNombre(),
-              obj.getPapellido(),
-              obj.getSapellido(),
-              obj.getFnacimiento(),
-              obj.getTelefono(),
-              obj.getId_tutor(),
-              obj.getId_prov(),
-              obj.getDes_prov(),
-              obj.getDes_tutor()
+              obj.getId_asig(),
+              obj.getFecha_matricula(),
+              obj.getNota_final(),
+              obj.getDes_alum(),
+              obj.getDes_asig()
             };
             modelo.addRow(data);
         }
@@ -66,15 +61,15 @@ public class AlumnoLogic {
         jtable.setModel(obtenerTodos());
     }
     
-    public void insertar(Alumno o) throws Exception {
+    public void insertar(Matricula o) throws Exception {
         dao.insertar(o);
     }
     
-    public void modificar(Alumno o) throws Exception {
+    public void modificar(Matricula o) throws Exception {
         dao.modificar(o);
     }
     
-    public void eliminar(Alumno o) throws Exception {
+    public void eliminar(Matricula o) throws Exception {
         dao.eliminar(o);
     }
     
@@ -88,7 +83,7 @@ public class AlumnoLogic {
     
     public void generarReporte() throws Exception{
         JasperReport reporte;
-        String ruta ="D:\\reportes\\rpt_alumnos.jasper";
+        String ruta ="D:\\reportes\\rpt_matricula.jasper";
         reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
         JasperPrint jprint = JasperFillManager.fillReport(reporte, null,
                 new JRBeanCollectionDataSource(dao.obtenerTodos())
@@ -98,9 +93,9 @@ public class AlumnoLogic {
         jViewer.setVisible(true);
     }
     
-    public void generarReporte(List<Alumno> lista) throws Exception{
+    public void generarReporte(List<Matricula> lista) throws Exception{
         JasperReport reporte;
-        String ruta ="D:\\reportes\\rpt_alumnos.jasper";
+        String ruta ="D:\\reportes\\rpt_matricula.jasper";
         reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
         JasperPrint jprint = JasperFillManager.fillReport(reporte, null,
                 new JRBeanCollectionDataSource(lista)
@@ -110,7 +105,7 @@ public class AlumnoLogic {
         jViewer.setVisible(true);
     }
     
-    public List<Alumno> obtenerListaBusqueda(String valor) throws Exception{
+    public List<Matricula> obtenerListaBusqueda(String valor) throws Exception{
         return dao.obtenerBusqueda(valor);
     }
     
@@ -118,22 +113,22 @@ public class AlumnoLogic {
         jComboBox.setModel(getModeloCB(dao.obtenerTodos()));
     }
     
-    private DefaultComboBoxModel getModeloCB(List<Alumno> lista) {
+    private DefaultComboBoxModel getModeloCB(List<Matricula> lista) {
         modeloCB  = new DefaultComboBoxModel();
-        for(Alumno o: lista){
+        for(Matricula o: lista){
             modeloCB.addElement(o);
         }
         
         return modeloCB;
     }
     
-    public void buscarCB(JComboBox jComboBox, int id_alum){
+    public void buscarCB(JComboBox jComboBox, int id_alum, int id_asig){
             DefaultComboBoxModel modeloCarrerasCB = (DefaultComboBoxModel)jComboBox.getModel();
-            Alumno obj =  null;
+            Matricula obj =  null;
             for(int i=0;i<modeloCarrerasCB.getSize();i++){
-                obj = (Alumno)modeloCarrerasCB.getElementAt(i);
+                obj = (Matricula)modeloCarrerasCB.getElementAt(i);
                 
-                if(obj.getId_alum()==id_alum){
+                if(obj.getId_alum()==id_alum && obj.getId_asig()==id_asig){
                     modeloCarrerasCB.setSelectedItem(modeloCarrerasCB.getElementAt(i));
                     break;
                 }

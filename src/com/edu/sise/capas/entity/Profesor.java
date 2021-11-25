@@ -140,7 +140,10 @@ public class Profesor {
     public void setDes_carrera(String des_carrera) {
         this.des_carrera = des_carrera;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return getPapellido() + " " + getSapellido() + ", " + getNombre();
+    }
+ 
 }

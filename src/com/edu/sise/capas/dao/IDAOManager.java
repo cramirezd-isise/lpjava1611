@@ -17,4 +17,6 @@ public interface IDAOManager {
     IProfesorDAO getProfesorDAO();
     ITutorDAO getTutorDAO();
     IAlumnoDAO getAlumnoDAO();
+    IAsignaturaDAO getAsignaturaDAO();
+    IMatriculaDAO getMatriculaDAO();
 }
