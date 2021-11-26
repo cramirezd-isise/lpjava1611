@@ -26,4 +26,11 @@ public class Utils {
         
         return nombreCampo + " " + mensaje;
     }
+    static public String getMensajeErrorMySql(int codeError){
+        String mensajeError = "";
+        switch(codeError){
+            case 1062: mensajeError = "Ya se encuentra registrado!!!";
+        }
+       return mensajeError;
+    }
 }

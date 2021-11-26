@@ -135,4 +135,8 @@ public class AsignaturaLogic {
                 }
             }
     }
+    
+    public Asignatura obtenerxID(Integer id) throws Exception{
+        return dao.obtenerxID(id);
+    }
 }

@@ -154,6 +154,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem9);
 
         jMenuItem10.setText("Notas Finales");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem10);
 
         jMenuBar1.add(jMenu2);
@@ -282,6 +287,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         this.add(ifrmInterno);
         ifrmInterno.show();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        iFrmNotasFinales ifrmInterno= new iFrmNotasFinales();
+        this.add(ifrmInterno);
+        ifrmInterno.show();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments

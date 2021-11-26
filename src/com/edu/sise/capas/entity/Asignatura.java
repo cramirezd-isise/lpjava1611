@@ -85,5 +85,10 @@ public class Asignatura {
         this.des_profe = des_profe;
     }
 
+    @Override
+    public String toString() {
+        return getId_asig() + " - " + getNombre();
+    }
+
    
 }

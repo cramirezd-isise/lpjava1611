@@ -8,6 +8,7 @@ package com.edu.sise.capas.dao.mysql;
 import com.edu.sise.capas.dao.DAOException;
 import com.edu.sise.capas.dao.IMatriculaDAO;
 import com.edu.sise.capas.entity.Matricula;
+import com.edu.sise.capas.utils.Utils;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,6 +17,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,7 +31,9 @@ public class MySqlMatriculaDAO implements IMatriculaDAO{
     final String INSERT = "{call pa_insertar_matricula(?,?,?,?)}";
     final String UPDATE = "{call pa_modificar_matricula(?,?,?,?)}";
     final String DELETE = "{call pa_eliminar_matricula(?,?)}";
-    final String BUSQUEDA = "{call pa_buscar_matricula(?,?)}";
+    final String BUSQUEDA = "{call pa_buscar_matricula(?)}";
+    final String GETALUMNOS = "{call pa_obtener_alumnos(?)}";
+    final String ADDNOTAFINAL = "{call pa_ingresar_nota_final(?,?,?)}";
 
     private Connection cn;
 
@@ -40,8 +45,11 @@ public class MySqlMatriculaDAO implements IMatriculaDAO{
     public void insertar(Matricula o) throws DAOException {
         CallableStatement cs = null;
         ResultSet rs = null;
-        
+          
         try{
+            //Vamos a trabajar con transacciones!!!
+            cn.setAutoCommit(false);
+            
             cs = cn.prepareCall(INSERT);
             int i = 1;
             cs.setInt(i++,o.getId_alum());
@@ -50,9 +58,18 @@ public class MySqlMatriculaDAO implements IMatriculaDAO{
             cs.setDouble(i++, o.getNota_final());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar el registro!!!");
-               
+             cn.commit();
         } catch (SQLException ex) {
-            throw new DAOException("Error en SQL", ex);
+            try {
+                cn.rollback();
+            } catch (SQLException ex1) {
+               throw new DAOException("No se pudo revertir los cambios!!!");
+            }
+
+            throw new DAOException(Utils.getMensajeErrorMySql(ex.getErrorCode()) +
+                    "\nError en SQL " +
+                    "\nCódigo: " + ex.getErrorCode() +
+                    "\nMensaje: "+ ex.getMessage(), ex);
         }finally{
             try{
                 if(rs!=null) rs.close();
@@ -77,6 +94,32 @@ public class MySqlMatriculaDAO implements IMatriculaDAO{
             cs.setInt(i++,o.getId_asig());
             if(cs.executeUpdate()==0)
                 throw new DAOException("No se pudo realizar la modificación del registro!!!");
+               
+        } catch (SQLException ex) {
+            throw new DAOException("Error en SQL", ex);
+        }finally{
+            try{
+                if(rs!=null) rs.close();
+                if(cs!=null) cs.close();
+            }catch(SQLException ex){
+                throw new DAOException("Error en SQL", ex);
+            }
+        }
+    }
+    
+    @Override
+    public void ingresarNotaFinal(Matricula o) throws DAOException {
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        
+        try{
+            cs = cn.prepareCall(ADDNOTAFINAL);
+            int i = 1;
+            cs.setDouble(i++, o.getNota_final());
+            cs.setInt(i++,o.getId_alum());
+            cs.setInt(i++,o.getId_asig());
+            if(cs.executeUpdate()==0)
+                throw new DAOException("No se pudo realizar el registro de la Nota Final!!!");
                
         } catch (SQLException ex) {
             throw new DAOException("Error en SQL", ex);
@@ -190,7 +233,33 @@ public class MySqlMatriculaDAO implements IMatriculaDAO{
         try {
             cs = cn.prepareCall(BUSQUEDA);
             int i=1;
-            cs.setString(i++, valor);
+            cs.setInt(i++, Integer.parseInt(valor));
+            rs = cs.executeQuery();
+            while(rs.next()){
+                lista.add(getRS(rs));
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error en SQL", ex);
+        }finally{
+            try{
+                if(rs!=null) rs.close();
+                if(cs!=null) cs.close();
+            }catch(SQLException ex){
+                throw new DAOException("Error en SQL", ex);
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Matricula> obtenerAlumnos(Integer id_asig) throws DAOException {
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        List<Matricula> lista = new ArrayList<>();
+        try {
+            cs = cn.prepareCall(GETALUMNOS);
+            int i=1;
+            cs.setInt(i++, id_asig);
             rs = cs.executeQuery();
             while(rs.next()){
                 lista.add(getRS(rs));

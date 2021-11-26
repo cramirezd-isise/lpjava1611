@@ -28,6 +28,7 @@ public class MySqlAsignaturaDAO implements IAsignaturaDAO{
     final String UPDATE = "{call pa_modificar_asignatura(?,?,?,?,?)}";
     final String DELETE = "{call pa_eliminar_asignatura(?)}";
     final String BUSQUEDA = "{call pa_buscar_asignatura(?)}";
+    final String GETBYID = "{call pa_obtener_asignatura_by_id(?)}";
 
     private Connection cn;
 
@@ -141,7 +142,26 @@ public class MySqlAsignaturaDAO implements IAsignaturaDAO{
 
     @Override
     public Asignatura obtenerxID(Integer id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        Asignatura obj =  null;
+        try {
+            cs = cn.prepareCall(GETALL);
+            rs = cs.executeQuery();
+            while(rs.next()){
+                obj =getRS(rs);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error en SQL", ex);
+        }finally{
+            try{
+                if(rs!=null) rs.close();
+                if(cs!=null) cs.close();
+            }catch(SQLException ex){
+                throw new DAOException("Error en SQL", ex);
+            }
+        }
+        return obj;
     }
     
     private Asignatura getRS(ResultSet rs) throws SQLException{

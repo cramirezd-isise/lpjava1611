@@ -143,6 +143,11 @@ public class Alumno {
         this.des_tutor = des_tutor;
     }
 
+    @Override
+    public String toString() {
+        return getPapellido() + " " + getSapellido() + ", " +getNombre();
+    }
+
     
     
 }
