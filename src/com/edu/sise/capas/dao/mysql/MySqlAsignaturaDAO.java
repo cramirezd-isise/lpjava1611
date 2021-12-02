@@ -146,7 +146,9 @@ public class MySqlAsignaturaDAO implements IAsignaturaDAO{
         ResultSet rs = null;
         Asignatura obj =  null;
         try {
-            cs = cn.prepareCall(GETALL);
+            cs = cn.prepareCall(GETBYID);
+            int i = 1;
+            cs.setInt(i++,id);
             rs = cs.executeQuery();
             while(rs.next()){
                 obj =getRS(rs);

@@ -124,11 +124,13 @@ public class MatriculaLogic {
     
     public void generarReporteNotasFinales(Asignatura o) throws Exception{
         JasperReport reporte;
-        String ruta ="D:\\reportes\\rpt_notas_finales.jasper";
+        String ruta ="D:\\reportes\\rpt_notas_finales_v5.jasper";
         reporte = (JasperReport)JRLoader.loadObjectFromFile(ruta);
         Map<String,Object> parametros = new HashMap<String, Object>();
         parametros.put("id_asig", o.getId_asig());
         parametros.put("nom_asig", o.getNombre());
+        parametros.put("CollectionBeanNF", 
+                new JRBeanCollectionDataSource(dao.obtenerAlumnos(o.getId_asig())));
         JasperPrint jprint = JasperFillManager.fillReport(reporte, parametros,
                 new JRBeanCollectionDataSource(dao.obtenerAlumnos(o.getId_asig()))
                 );

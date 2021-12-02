@@ -5,6 +5,15 @@
  */
 package com.edu.sise.capas.gui;
 
+import java.awt.Desktop;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
         
 
 /**
@@ -54,6 +63,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("...::SISTEMA PRINCIPAL::...");
+        setIconImage(getIconImage());
 
         mniSalir.setText("Archivo");
         mniSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -178,10 +188,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Ayuda");
 
         jMenuItem12.setText("Manual del Sistema");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem12);
         jMenu3.add(jSeparator1);
 
         jMenuItem11.setText("Acerca de...");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem11);
 
         jMenuBar1.add(jMenu3);
@@ -295,6 +315,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ifrmInterno.show();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        FrmDlgAcercaDe frmDlg = new FrmDlgAcercaDe(this, true);
+        frmDlg.setLocationRelativeTo(this);
+        frmDlg.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        try {
+            // TODO add your handling code here:
+            String manual = "D:\\reportes\\manual.pdf";
+            File archivo = new File(manual);
+            Desktop.getDesktop().open(archivo);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(),
+                    "Sistema", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(),
+                    "Sistema", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,11 +348,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+                System.out.println(info.getClassName() + " " + info.getName());
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
             }
+              //javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+              javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -357,4 +402,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniEmpleados;
     private javax.swing.JMenu mniSalir;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public Image getIconImage() {
+        Image rpta = Toolkit.getDefaultToolkit()
+                .getImage(ClassLoader.getSystemResource("com/edu/sise/capas/gui/resources/icon_matricula.png"));
+        return rpta;
+    }
+
+
+    
 }
